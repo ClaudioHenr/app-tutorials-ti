@@ -34,3 +34,76 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+## Criação do projeto
+Next.js
+npx create-next-app@latest
+
+## dockerfile.yaml
+version: 
+services:
+    [nomeprojeto]:
+        container_name:
+        build:
+            context: 
+            dockerfile: 
+        volumes:
+            -
+        ports:
+            - 
+networks:
+    default:
+        driver:
+
+## Subir para Docker
+docker-compose up -d --build
+
+docker-compose exec [nomeprojeto] sh -c "npm install"
+
+docker-compose exec [nomeprojeto] sh -c "npm start"
+
+
+
+#####
+https://www.youtube.com/watch?v=fqr0mhQrASU&ab_channel=hcode
+## Ambiente
+Criar arquivos
+.env
+.env.production
+instalar módulo para carregar arquivos .env de acordo com o ambiente:
+    npm i @nextjs/config
+importar o módulo em arquivo app.module.ts
+imports: [ ConfigModule.forRoot() ]
+
+## Criar arquivo .Dockerignore
+Dentro dele:
+node_modules
+.env
+dist
+
+## Criar arquivo Dockerfile
+Dentro dele 
+FROM node:latest
+
+WORKDIR /usr/src/api
+
+COPY . .
+COPY ./.env.production ./.env
+
+RUN npm install --quiet --no-optional --no-fund --loglevel=error
+
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["npm", "run", "start:prod"]
+
+## Criar imagem docker
+No terminal:
+    docker build --pull --rm -f "app-tutorials-ti/Dockerfile" -t projetos:latest "app-tutorials-ti"
+
+## Rodar imagem docker
+
+
+#####
